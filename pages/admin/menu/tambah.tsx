@@ -1,7 +1,9 @@
 import React from "react";
-import {Divider, Typography, Form, Input, Button, Upload} from 'antd';
+import {Divider, Typography, Form, Input, Button, Upload, Select, message} from 'antd';
 import {UploadOutlined} from '@ant-design/icons'
 import Container from "../../../components/Container";
+
+const {Option} = Select
 
 export default function Tambah() {
 
@@ -14,7 +16,21 @@ export default function Tambah() {
   }
 
   const uploadFileProps = {
-
+    name: 'file',
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    headers: {
+      authorization: 'authorization-text',
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
   }
 
   return (
@@ -45,6 +61,14 @@ export default function Tambah() {
           <Upload {...uploadFileProps}>
             <Button icon={<UploadOutlined/>}>Upload Gambar</Button>
           </Upload>
+        </Form.Item>
+
+        <Form.Item label="Jenis Menu" name="jenis">
+          <Select defaultValue="makanan">
+            <Option value="makanan">Makanan</Option>
+            <Option value="minuman">Minuman</Option>
+            <Option value="tambahan">Tambahan</Option>
+          </Select>
         </Form.Item>
 
         <Form.Item wrapperCol={{offset: 8, span: 16}}>
