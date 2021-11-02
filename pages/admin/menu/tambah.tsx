@@ -1,7 +1,7 @@
 import React from "react";
 import {Divider, Typography, Form, Input, Button, Upload} from 'antd';
 import {UploadOutlined} from '@ant-design/icons'
-import Container from "../../../components/wrapper/Container";
+import Container from "../../../components/Container";
 
 export default function Tambah() {
 

@@ -16,7 +16,7 @@ export default function Menu() {
   }, []);
   useEffect(() => {
     !loading && getData();
-  }, []);
+  });
 
   const columns = [
     {
