@@ -3,22 +3,30 @@ import { Typography, Table, Skeleton, Row, Col, Button } from "antd";
 import styles from "../styles/Main.module.css";
 import MenuMakanan from "../../models/menu";
 import { EXT_API } from "../../constant";
+import { MenuService } from "../../services/MenuService";
 
 export default function Menu() {
   const [listMakanan, setListMakanan] = useState(Array<MenuMakanan>());
   const [loading, setloading] = useState(false);
-  const getData = useCallback(() => {
+  const { getMenu } = MenuService();
+  const getData = useCallback(async () => {
     setloading(true);
-    fetch(`${EXT_API}/api/makanan`).then(async (res) => {
-      setListMakanan(await res.json());
+    getMenu().then((res) => {
+      setListMakanan(res);
       setloading(false);
     });
-  }, []);
+  }, [getMenu]);
+
   useEffect(() => {
     !loading && getData();
-  });
+  }, []);
 
   const columns = [
+    {
+      title: "No. ",
+      dataIndex: "id",
+      key: "id",
+    },
     {
       title: "Nama",
       dataIndex: "nama",
@@ -39,16 +47,24 @@ export default function Menu() {
   return (
     <div>
       <Row>
-        
         <Col span={18}>
           <Typography.Title level={3}>Menu Makanan</Typography.Title>
         </Col>
-        <Col span={6}> <Button href="/admin/menu/tambah" type="primary" style={{float: "right"}}>Tambah</Button> </Col>
+        <Col span={6}>
+          {" "}
+          <Button
+            href="/admin/menu/tambah"
+            type="primary"
+            style={{ float: "right" }}
+          >
+            Tambah
+          </Button>{" "}
+        </Col>
       </Row>
       {loading ? (
         <Skeleton paragraph={{ rows: 10 }} active />
       ) : (
-        <Table dataSource={listMakanan} columns={columns} />
+        <Table dataSource={listMakanan} columns={columns}/>
       )}
     </div>
   );

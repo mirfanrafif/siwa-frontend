@@ -6,12 +6,14 @@ import MenuMakanan from "../../models/menu";
 
 const listMakanan: MenuMakanan[] = [
   {
+    id: 1,
     nama: "Pecel",
     harga: 9000,
     url_gambar:
       "https://awsimages.detik.net.id/community/media/visual/2021/05/21/cara-membuat-sambal-pecel-madiun-1.jpeg?w=700&q=90",
   },
   {
+    id: 2,
     nama: "Rawon",
     harga: 15000,
     url_gambar:
