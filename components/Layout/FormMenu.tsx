@@ -5,7 +5,7 @@ import Container from '../Container'
 import { UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
 const { Option } = Select;
 
-export default function FormMenu() {
+export default function FormMenu({}) {
 
     const onFinish = (values: any) => {
 

@@ -1,14 +1,15 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Typography, Table, Skeleton, Row, Col, Button } from "antd";
-import styles from "../styles/Main.module.css";
 import MenuMakanan from "../../models/menu";
-import { EXT_API } from "../../constant";
 import { MenuService } from "../../services/MenuService";
+import { useRouter } from "next/dist/client/router";
 
 export default function Menu() {
   const [listMakanan, setListMakanan] = useState(Array<MenuMakanan>());
   const [loading, setloading] = useState(false);
   const { getMenu } = MenuService();
+  const router = useRouter();
+
   const getData = useCallback(async () => {
     setloading(true);
     getMenu().then((res) => {
@@ -17,9 +18,18 @@ export default function Menu() {
     });
   }, [getMenu]);
 
+  const onRowClick = (record, rowIndex) => {
+    return {
+      onClick: (event) => {
+        console.log(record.id);
+        router.push(`/admin/menu/${record.id}`);
+      },
+    };
+  };
+
   useEffect(() => {
-    !loading && getData();
-  }, []);
+    getData();
+  }, [getData]);
 
   const columns = [
     {
@@ -64,7 +74,12 @@ export default function Menu() {
       {loading ? (
         <Skeleton paragraph={{ rows: 10 }} active />
       ) : (
-        <Table dataSource={listMakanan} columns={columns}/>
+        <Table
+          dataSource={listMakanan}
+          columns={columns}
+          rowKey="id"
+          onRow={onRowClick}
+        />
       )}
     </div>
   );
