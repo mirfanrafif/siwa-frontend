@@ -15,20 +15,17 @@ export default function MenuKasir() {
 
     const addItemToKeranjang = (item: MenuMakanan) => {
         const menuIndex = findIndexMenuInKeranjang(item)
-        setListKeranjang( () => {
-            if (menuIndex != -1) {
-                    const newListKeranjang = listKeranjang
-                    newListKeranjang[menuIndex].jumlah++
-                    console.log(newListKeranjang)
-                    return newListKeranjang
-                } else {
-                    const keranjangItem: Keranjang = {
-                        menu: item,
-                        jumlah: 1
-                    }
-                    return [...listKeranjang, keranjangItem]
-                }
-        } )
+        const newListKeranjang = listKeranjang
+        if (menuIndex != -1) {
+            newListKeranjang[menuIndex].jumlah++;
+        } else {
+            const keranjangItem: Keranjang = {
+                menu: item,
+                jumlah: 1
+            }
+            newListKeranjang.push(keranjangItem)
+        }
+        setListKeranjang( [...newListKeranjang] )
     }
 
     const findIndexMenuInKeranjang = (item: MenuMakanan) => {
