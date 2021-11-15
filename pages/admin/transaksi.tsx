@@ -1,18 +1,26 @@
 import { Row, Col, Typography, Button, Skeleton, Table } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
-import { EXT_API } from "../../constant";
-import MenuMakanan from "../../models/menu";
-import service from "../../services/MenuService";
+import { EXT_API } from "../../utils/constant";
+import MenuMakanan from "../../utils/models/menu";
+import { MenuService } from "../../utils/services/MenuService";
 
 export default function Transaksi() {
   const [listTransaksi, setListTransaksi] = useState(Array<MenuMakanan>());
   const [loading, setloading] = useState(false);
-  useCallback(async () => {
+
+  const { getMenu } = MenuService()
+
+  const getData = useCallback(async () => {
     setloading(true);
-    await service.getMenu().then((data) => {
-      setListTransaksi(data);
+    getMenu().then((res) => {
+      setListTransaksi(res);
+      setloading(false);
     });
-  }, []);
+  }, [getMenu]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   const columns = [
     {
@@ -36,16 +44,10 @@ export default function Transaksi() {
     <div>
       <Row>
         <Col span={18}>
-          <Typography.Title level={3}>Menu Makanan</Typography.Title>
+          <Typography.Title level={3}>Transaksi</Typography.Title>
         </Col>
         <Col span={6}>
-          <Button
-            href="/admin/transaksi/tambah"
-            type="primary"
-            style={{ float: "right" }}
-          >
-            Tambah
-          </Button>
+          
         </Col>
       </Row>
       {loading ? (

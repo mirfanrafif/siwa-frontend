@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Typography, Table, Skeleton, Row, Col, Button } from "antd";
-import MenuMakanan from "../../models/menu";
-import { MenuService } from "../../services/MenuService";
+import MenuMakanan from "../../utils/models/menu";
+import { MenuService } from "../../utils/services/MenuService";
 import { useRouter } from "next/dist/client/router";
 
 export default function Menu() {
