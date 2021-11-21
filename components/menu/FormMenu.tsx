@@ -1,7 +1,7 @@
 import { Form, Input, Select, Upload, Typography, Divider, message, Button } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import React from 'react'
-import Container from '../Container'
+import Container from '../wrapper/Container'
 import { UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
 const { Option } = Select;
 

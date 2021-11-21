@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import { Layout, Menu } from "antd";
 import Sidebar from "./sidebar";
+import { useSelector } from "react-redux";
 
-export default function LayoutWrapper({ children }) {
+export const LayoutWrapper = ({ children }) => {
+
+  const user = useSelector(state => state.auth.user)
+
   return (
     <>
       <Head>
@@ -16,11 +20,10 @@ export default function LayoutWrapper({ children }) {
         <Sidebar />
         <Layout>
           <Layout.Header
-            className="site-layout-sub-header-background"
             style={{ padding: 0 }}
           >
             <Menu theme="dark" mode="horizontal" style={{ float: "right" }}>
-              <Menu.Item key="1">Logout</Menu.Item>
+              <Menu.Item key="1" >Logout</Menu.Item>
             </Menu>
           </Layout.Header>
           <Layout.Content>
@@ -31,3 +34,7 @@ export default function LayoutWrapper({ children }) {
     </>
   );
 }
+
+// LayoutWrapper = wrapper.withRedux(initStore, (state) => ({ user: state.auth.user }))(LayoutWrapper)
+
+export default LayoutWrapper

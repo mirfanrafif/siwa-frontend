@@ -5,7 +5,8 @@ import { MenuService } from '../../utils/services/MenuService'
 import MenuList from '../../components/menu/MenuList'
 import KeranjangList from '../../components/menu/KeranjangList'
 import Keranjang from '../../utils/models/keranjang'
-import Container from '../../components/Container'
+import Container from '../../components/wrapper/Container'
+import { useSelector } from 'react-redux'
 
 export default function MenuKasir() {
 

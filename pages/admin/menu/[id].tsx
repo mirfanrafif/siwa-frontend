@@ -1,5 +1,5 @@
 import React from 'react'
-import FormMenu from '../../../components/Layout/FormMenu'
+import FormMenu from '../../../components/menu/FormMenu'
 
 export default function Edit() {
     return (

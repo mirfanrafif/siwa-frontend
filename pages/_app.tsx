@@ -2,16 +2,14 @@ import 'antd/dist/antd.css';
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import LayoutWrapper from '../components/wrapper/LayoutWrapper';
-import { ContextWrapper } from '../utils/context/ContextWrapper';
+import { wrapper } from '../hooks/store'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ContextWrapper>
-      <LayoutWrapper>
-        <Component {...pageProps} />
-      </LayoutWrapper>
-    </ContextWrapper>
+    <LayoutWrapper>
+      <Component {...pageProps} />
+    </LayoutWrapper>
   )
 }
 
-export default MyApp
+export default wrapper.withRedux(MyApp);
