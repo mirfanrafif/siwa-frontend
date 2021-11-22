@@ -7,9 +7,7 @@ import { logout } from "../../reduxes/ActionCreator";
 import { AppState } from "../../reduxes/store";
 import router from "next/router";
 
-const LayoutWrapper = ({ isLoggedIn, user, children, logout }) => {
-
-  const dispatch = useDispatch()
+const LayoutWrapper = ({ isLoggedIn, children, logout }) => {
 
   const onClickLogout = () => {
     logout()
