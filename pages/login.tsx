@@ -21,8 +21,11 @@ function Login({ auth, login }) {
             switch (auth.user.role) {
                 case 'admin':
                     router.push('/admin/menu')
+                    break;
+                case 'kasir':
+                    router.push('/kasir/menu')
+                    break;
                 default:
-
             }
         }
     }, [auth])

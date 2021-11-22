@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import { Layout, Menu } from "antd";
 import Sidebar from "./sidebar";
@@ -9,6 +9,32 @@ import router from "next/router";
 
 const LayoutWrapper = ({ isLoggedIn, children, logout }) => {
 
+  const [authorized, setAuthorized] = useState(false)
+  const authCheck = (url) => {
+    const publicPaths = ['/login'];
+    const path = url.split('?')[0];
+    if (!isLoggedIn && !publicPaths.includes(path)) {
+      router.push({
+        pathname: '/login',
+        query: { returnUrl: router.asPath }
+      });
+    } else {
+      setAuthorized(true)
+    }
+  }
+  useEffect(() => {
+    authCheck(router.asPath)
+    // set authorized to false to hide page content while changing routes
+    const hideContent = () => setAuthorized(false);
+    router.events.on('routeChangeStart', hideContent);
+    // run auth check on route change
+    router.events.on('routeChangeComplete', authCheck)
+    return () => {
+      router.events.off('routeChangeStart', hideContent);
+      router.events.off('routeChangeComplete', authCheck);
+    }
+  }, [])
+
   const onClickLogout = () => {
     logout()
     router.push('/login')
@@ -17,6 +43,8 @@ const LayoutWrapper = ({ isLoggedIn, children, logout }) => {
   const onClickLogin = () => {
     router.push('/login')
   }
+
+
 
   return (
     <>
@@ -34,7 +62,7 @@ const LayoutWrapper = ({ isLoggedIn, children, logout }) => {
               style={{ padding: 0 }}
             >
               <Menu theme="dark" mode="horizontal" style={{ float: "right" }}>
-                {isLoggedIn ? (
+                {authorized ? (
                   <Menu.Item key="1" onClick={onClickLogout}>Logout</Menu.Item>
                 ) : (
                   <Menu.Item key="2" onClick={onClickLogin} >Login</Menu.Item>
@@ -50,7 +78,5 @@ const LayoutWrapper = ({ isLoggedIn, children, logout }) => {
     </>
   );
 }
-
-// LayoutWrapper = wrapper.withRedux(initStore, (state) => ({ user: state.auth.user }))(LayoutWrapper)
 
 export default connect((state: AppState) => state.auth, { logout })(LayoutWrapper)
