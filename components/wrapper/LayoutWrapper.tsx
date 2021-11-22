@@ -2,11 +2,22 @@ import React, { useEffect } from "react";
 import Head from "next/head";
 import { Layout, Menu } from "antd";
 import Sidebar from "./sidebar";
-import { useSelector } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { logout } from "../../reduxes/ActionCreator";
+import router from "next/router";
 
-export const LayoutWrapper = ({ children }) => {
+const LayoutWrapper = ({ isLoggedIn, user, children, logout }) => {
 
-  const user = useSelector(state => state.auth.user)
+  const dispatch = useDispatch()
+
+  const onClickLogout = () => {
+    logout()
+    router.push('/login')
+  }
+
+  const onClickLogin = () => {
+    router.push('/login')
+  }
 
   return (
     <>
@@ -18,18 +29,24 @@ export const LayoutWrapper = ({ children }) => {
 
       <Layout>
         <Sidebar />
-        <Layout>
-          <Layout.Header
-            style={{ padding: 0 }}
-          >
-            <Menu theme="dark" mode="horizontal" style={{ float: "right" }}>
-              <Menu.Item key="1" >Logout</Menu.Item>
-            </Menu>
-          </Layout.Header>
-          <Layout.Content>
-            <div className="site-layout-background" style={{ minHeight: "100vh", padding: 24 }}>{children}</div>
-          </Layout.Content>
-        </Layout>
+        <Layout.Content>
+          <Layout>
+            <Layout.Header
+              style={{ padding: 0 }}
+            >
+              <Menu theme="dark" mode="horizontal" style={{ float: "right" }}>
+                {isLoggedIn ? (
+                  <Menu.Item key="1" onClick={onClickLogout}>Logout</Menu.Item>
+                ) : (
+                  <Menu.Item key="2" onClick={onClickLogin} >Login</Menu.Item>
+                )}
+              </Menu>
+            </Layout.Header>
+            <Layout.Content>
+              <div className="site-layout-background" style={{ minHeight: "100vh", padding: 24 }}>{children}</div>
+            </Layout.Content>
+          </Layout>
+        </Layout.Content>
       </Layout>
     </>
   );
@@ -37,4 +54,4 @@ export const LayoutWrapper = ({ children }) => {
 
 // LayoutWrapper = wrapper.withRedux(initStore, (state) => ({ user: state.auth.user }))(LayoutWrapper)
 
-export default LayoutWrapper
+export default connect(state => state.auth, { logout })(LayoutWrapper)

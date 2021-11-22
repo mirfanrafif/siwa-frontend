@@ -1,18 +1,17 @@
 import { Button, Col, Form, Input, Row, Typography } from 'antd'
 import router from 'next/router'
 import React from 'react'
+import { connect } from 'react-redux'
+import { login } from '../../reduxes/ActionCreator'
 import Container from '../wrapper/Container'
 
-export default function LoginComponent() {
-
+function LoginComponent({ login }) {
     const onFinish = (values: any) => {
-        console.log(values)
-        localStorage.setItem("user_data", JSON.stringify(values))
-        router.push('/admin/menu')
-    }
-
-    const onFinishFailed = () => {
-
+        const authData = {
+            ...values,
+            role: 'admin'
+        }
+        login(authData)
     }
 
     return (
@@ -26,7 +25,6 @@ export default function LoginComponent() {
                             wrapperCol={{ span: 16 }}
                             initialValues={{ remember: true }}
                             onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
                             autoComplete="off"
                         >
                             <Form.Item label="Username" name="username" rules={[{
@@ -51,3 +49,7 @@ export default function LoginComponent() {
         </div>
     )
 }
+
+export default connect(state => state, { login })(LoginComponent)
+
+

@@ -6,10 +6,9 @@ import { getCookie, setCookie, removeCookie } from './cookies';
 
 let initialState: {};
 if (typeof localStorage !== "undefined") {
-    const authCookie = getCookie('auth');
-    if (authCookie) {
-        console.log(decodeURIComponent(authCookie))
-        initialState = JSON.parse(decodeURIComponent(authCookie));
+    const localAuth = JSON.parse(localStorage.getItem('auth') || "{}")
+    if (localAuth) {
+        initialState = localAuth
     } else {
         initialState = {
             isLoggedIn: false,
@@ -27,24 +26,18 @@ if (typeof localStorage !== "undefined") {
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case DEAUTHENTICATE:
-            removeCookie("auth");
             return {
-                ...state,
                 isLoggedIn: false
             };
-
-
         case AUTHENTICATE:
             const authObj = {
-                ...state,
                 isLoggedIn: true,
                 user: action.payload
             };
-            setCookie("auth", JSON.stringify(authObj));
+            if (typeof localStorage !== "undefined") localStorage.setItem("auth", JSON.stringify(authObj)); else console.log('localstorage error')
             return authObj;
         case RESTORE_AUTH_STATE:
             return {
-                ...state,
                 isLoggedIn: true,
                 user: action.payload.user
             };

@@ -2,29 +2,21 @@ import { Layout, Menu, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { UnorderedListOutlined, TransactionOutlined } from "@ant-design/icons";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const { Title } = Typography;
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
-  const [userData, setUserData] = useState({})
   const [selectedMenu, setSelectedMenu] = useState("1")
-
+  const userData = useSelector(state => state.auth.user)
 
   const onCollapse = (collapsed: boolean) => {
     setCollapsed(collapsed);
   };
 
-  useEffect(() => {
-    const user = localStorage.getItem('user_data')
-    if (user) {
-      setUserData(JSON.parse(user))
-    }
-
-  }, [])
-
   const renderMenu = () => {
-    if (userData.role == "admin") {
+    if (userData && userData.role == "admin") {
       return (
         <Menu theme="dark" mode="inline" selectedKeys={[selectedMenu]}>
           <Menu.Item key="1" icon={<UnorderedListOutlined />} onClick={() => { setSelectedMenu("1") }}>
@@ -35,7 +27,7 @@ export default function Sidebar() {
           </Menu.Item>
         </Menu>
       )
-    } else if (userData.role == "kasir") {
+    } else if (userData && userData.role == "kasir") {
       return (
         <Menu theme="dark" mode="inline" selectedKeys={[selectedMenu]}>
           <Menu.Item key="1" icon={<UnorderedListOutlined />} onClick={() => { setSelectedMenu("1") }}>
