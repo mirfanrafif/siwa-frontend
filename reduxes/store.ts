@@ -1,21 +1,18 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
-import thunkMiddleware from 'redux-thunk'
+import { combineReducers } from 'redux'
 import AuthReducer from "./AuthReducer";
-import logger from 'redux-logger'
+import { configureStore } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper';
 
+const store = () => configureStore({
+    reducer: combineReducers({
+        auth: AuthReducer
+    }),
+    preloadedState: {},
+    devTools: true
+})
 
-const reducers = combineReducers({auth: AuthReducer});
+export type AppStore = ReturnType<typeof store>;
+export type AppState = ReturnType<AppStore['getState']>
 
-
-export const initStore = (initialState = {}) => {
-   return createStore(
-       reducers,
-       initialState,
-       composeWithDevTools(applyMiddleware(thunkMiddleware, logger))
-   )
-};
-
-export const wrapper = createWrapper(initStore, {debug: true})
+export const wrapper = createWrapper(store, {debug: true})
 

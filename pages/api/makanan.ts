@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import React from "react";
-import MenuMakanan from "../../models/menu";
+import MenuMakanan from "../../utils/models/menu";
 
 const listMakanan: MenuMakanan[] = [
   {

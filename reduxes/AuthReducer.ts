@@ -1,10 +1,9 @@
 import { RESTORE_AUTH_STATE, AUTHENTICATE, DEAUTHENTICATE } from "./ActionConstants";
 
-
-import { getCookie, setCookie, removeCookie } from './cookies';
-
-
-let initialState: {};
+var initialState = {
+    isLoggedIn: false,
+    user: {}
+}
 if (typeof localStorage !== "undefined") {
     const localAuth = JSON.parse(localStorage.getItem('auth') || "{}")
     if (localAuth) {
@@ -27,7 +26,8 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case DEAUTHENTICATE:
             return {
-                isLoggedIn: false
+                isLoggedIn: false,
+                user: {}
             };
         case AUTHENTICATE:
             const authObj = {

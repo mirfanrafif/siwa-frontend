@@ -4,6 +4,7 @@ import { Layout, Menu } from "antd";
 import Sidebar from "./sidebar";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { logout } from "../../reduxes/ActionCreator";
+import { AppState } from "../../reduxes/store";
 import router from "next/router";
 
 const LayoutWrapper = ({ isLoggedIn, user, children, logout }) => {
@@ -54,4 +55,4 @@ const LayoutWrapper = ({ isLoggedIn, user, children, logout }) => {
 
 // LayoutWrapper = wrapper.withRedux(initStore, (state) => ({ user: state.auth.user }))(LayoutWrapper)
 
-export default connect(state => state.auth, { logout })(LayoutWrapper)
+export default connect((state: AppState) => state.auth, { logout })(LayoutWrapper)

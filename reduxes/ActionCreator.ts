@@ -26,7 +26,6 @@ export const restoreState = (authState) => {
 export const login = (loginDetails) => {
     return async (dispatch) => {
         try {
-
             dispatch(deAuthenticateAction());
             // login code. And storing data in result variable
             const result = loginDetails
@@ -43,6 +42,10 @@ export const signUp = signUpDetails => {
         try {
             dispatch(deAuthenticateAction());
             // Signup code. And storing data in result variable
+            const result = {
+                ...signUpDetails,
+                role: 'kasir'
+            }
             dispatch(authenticateAction(result));
 
 

@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import { UnorderedListOutlined, TransactionOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import { AppState } from "../../reduxes/store";
 
 const { Title } = Typography;
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState("1")
-  const userData = useSelector(state => state.auth.user)
+  const userData = useSelector((state: AppState) => state.auth.user)
 
   const onCollapse = (collapsed: boolean) => {
     setCollapsed(collapsed);
