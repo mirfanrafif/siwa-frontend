@@ -3,18 +3,21 @@ import { Typography, Table, Skeleton, Row, Col, Button } from "antd";
 import MenuMakanan from "../../utils/models/menu";
 import { MenuService } from "../../utils/services/MenuService";
 import { useRouter } from "next/dist/client/router";
+import { connect } from "react-redux";
+import { AppState } from "../../utils/reduxes/store";
+import { setLoading } from '../../utils/reduxes/ActionCreator'
 
-export default function Menu() {
+export function Menu() {
   const [listMakanan, setListMakanan] = useState(Array<MenuMakanan>());
-  const [loading, setloading] = useState(false);
+  const [dataLoading, setDataLoading] = useState(false);
   const { getMenu } = MenuService();
   const router = useRouter();
 
   const getData = useCallback(async () => {
-    setloading(true);
+    setDataLoading(true);
     getMenu().then((res) => {
       setListMakanan(res);
-      setloading(false);
+      setDataLoading(false);
     });
   }, [getMenu]);
 
@@ -75,7 +78,7 @@ export default function Menu() {
           </Button>{" "}
         </Col>
       </Row>
-      {loading ? (
+      {dataLoading ? (
         <Skeleton paragraph={{ rows: 10 }} active />
       ) : (
         <Table
@@ -88,3 +91,5 @@ export default function Menu() {
     </div>
   );
 }
+
+export default connect((state: AppState) => state.loading, { setLoading })(Menu)

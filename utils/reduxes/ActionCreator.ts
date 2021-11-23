@@ -1,4 +1,4 @@
-import { RESTORE_AUTH_STATE, AUTHENTICATE, DEAUTHENTICATE } from "./ActionConstants";
+import { RESTORE_AUTH_STATE, AUTHENTICATE, DEAUTHENTICATE, SET_LOADING } from "./ActionConstants";
 
 export const authenticateAction = (user) => {
     return {
@@ -15,16 +15,16 @@ export const deAuthenticateAction = () => {
 };
 
 
-export const restoreState = (authState) => {
+export const loadingAction = (loadingState) => {
     return {
-        type: RESTORE_AUTH_STATE,
-        payload: authState
+        type: SET_LOADING,
+        payload: loadingState
     }
 };
 
 
 export const login = (loginDetails) => {
-    return async (dispatch) => {
+    return (dispatch) => {
         try {
             dispatch(deAuthenticateAction());
             // login code. And storing data in result variable
@@ -57,15 +57,14 @@ export const signUp = signUpDetails => {
 
 
 export const logout = () => {
-    return async dispatch => {
+    return dispatch => {
         console.log("logout action created")
         dispatch(deAuthenticateAction())
     }
 };
 
-
-export const restore = (savedState) => {
-    return dispatch => {
-        dispatch(restoreState(savedState));
-    };
-};
+export const setLoading = (loading) => {
+    return async dispatch => {
+        dispatch(loadingAction(loading))
+    }
+}

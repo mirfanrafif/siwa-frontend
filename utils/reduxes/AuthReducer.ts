@@ -25,18 +25,15 @@ if (typeof localStorage !== "undefined") {
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case DEAUTHENTICATE:
-            const logoutObj = {
+            const deauthObj = {
                 ...state,
                 isLoggedIn: false,
                 user: {}
             }
             if (typeof localStorage !== "undefined") {
-                localStorage.setItem('auth', JSON.stringify(logoutObj))
+                localStorage.setItem('auth', JSON.stringify(deauthObj))
             }
-            return {
-                isLoggedIn: false,
-                user: {}
-            };
+            return deauthObj;
         case AUTHENTICATE:
             const authObj = {
                 ...state,
