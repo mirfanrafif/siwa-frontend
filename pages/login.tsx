@@ -1,12 +1,12 @@
-import { Button, Col, Form, Input, Row, Typography } from 'antd'
+import { Button, Col, Divider, Form, Input, Row, Typography } from 'antd'
 import router from 'next/router'
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Container from '../components/wrapper/Container'
-import { login } from '../reduxes/ActionCreator'
-import { AppState } from '../reduxes/store'
+import { login } from '../utils/reduxes/ActionCreator'
+import { AppState } from '../utils/reduxes/store'
 
-function Login({ auth, login }) {
+function Login({ isLoggedIn, user, login }) {
     const onFinish = (values: any) => {
         const authData = {
             ...values,
@@ -17,8 +17,8 @@ function Login({ auth, login }) {
     }
 
     useEffect(() => {
-        if (auth.isLoggedIn) {
-            switch (auth.user.role) {
+        if (isLoggedIn) {
+            switch (user.role) {
                 case 'admin':
                     router.push('/admin/menu')
                     break;
@@ -28,17 +28,17 @@ function Login({ auth, login }) {
                 default:
             }
         }
-    }, [auth])
+    }, [isLoggedIn, user])
 
     return (
         <div>
             <Row>
-                <Col span={6} offset={3}>
+                <Col span={6} offset={9}>
                     <Container>
-                        <Typography.Title level={3}>Login</Typography.Title>
+                        <Typography.Title level={3} style={{ textAlign: 'center' }}>Login</Typography.Title>
+                        <Divider />
                         <Form name="tambah-menu"
-                            labelCol={{ span: 8 }}
-                            wrapperCol={{ span: 16 }}
+                            layout="vertical"
                             initialValues={{ remember: true }}
                             onFinish={onFinish}
                             autoComplete="off"
@@ -55,8 +55,8 @@ function Login({ auth, login }) {
                                 <Input.Password />
                             </Form.Item>
 
-                            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                <Button type="primary" htmlType="submit"> Simpan </Button>
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit"> Login </Button>
                             </Form.Item>
                         </Form>
                     </Container>
@@ -66,10 +66,4 @@ function Login({ auth, login }) {
     )
 }
 
-const mapStateToProps = (state: AppState) => {
-    return {
-        auth: state.auth
-    }
-}
-
-export default connect(mapStateToProps, { login })(Login)
+export default connect((state: AppState) => state.auth, { login })(Login)

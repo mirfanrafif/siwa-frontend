@@ -27,6 +27,10 @@ export default function Menu() {
     };
   };
 
+  const onClickTambah = () => {
+    router.push('/admin/menu/tambah')
+  }
+
   useEffect(() => {
     getData();
   }, [getData]);
@@ -63,7 +67,7 @@ export default function Menu() {
         <Col span={6}>
           {" "}
           <Button
-            href="/admin/menu/tambah"
+            onClick={onClickTambah}
             type="primary"
             style={{ float: "right" }}
           >

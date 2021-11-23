@@ -1,39 +1,37 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { Layout, Menu } from "antd";
 import Sidebar from "./sidebar";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { logout } from "../../reduxes/ActionCreator";
-import { AppState } from "../../reduxes/store";
+import { connect } from "react-redux";
+import { logout } from "../../utils/reduxes/ActionCreator";
+import { AppState } from "../../utils/reduxes/store";
 import router from "next/router";
 
 const LayoutWrapper = ({ isLoggedIn, children, logout }) => {
 
-  const [authorized, setAuthorized] = useState(false)
+  const publicPaths = ['/login'];
+
+  useEffect(() => {
+    authCheck(router.asPath)
+    // set authorized to false to hide page content while changing routes
+    // run auth check on route change
+    router.events.on('routeChangeComplete', authCheck)
+    return () => {
+      router.events.off('routeChangeComplete', authCheck);
+    }
+  }, [])
+
   const authCheck = (url) => {
-    const publicPaths = ['/login'];
     const path = url.split('?')[0];
+    console.log(isLoggedIn)
     if (!isLoggedIn && !publicPaths.includes(path)) {
       router.push({
         pathname: '/login',
         query: { returnUrl: router.asPath }
       });
-    } else {
-      setAuthorized(true)
     }
   }
-  useEffect(() => {
-    authCheck(router.asPath)
-    // set authorized to false to hide page content while changing routes
-    const hideContent = () => setAuthorized(false);
-    router.events.on('routeChangeStart', hideContent);
-    // run auth check on route change
-    router.events.on('routeChangeComplete', authCheck)
-    return () => {
-      router.events.off('routeChangeStart', hideContent);
-      router.events.off('routeChangeComplete', authCheck);
-    }
-  }, [])
+
 
   const onClickLogout = () => {
     logout()
@@ -44,8 +42,6 @@ const LayoutWrapper = ({ isLoggedIn, children, logout }) => {
     router.push('/login')
   }
 
-
-
   return (
     <>
       <Head>
@@ -55,14 +51,18 @@ const LayoutWrapper = ({ isLoggedIn, children, logout }) => {
       </Head>
 
       <Layout>
-        <Sidebar />
+        {
+          isLoggedIn && (
+            <Sidebar />
+          )
+        }
         <Layout.Content>
           <Layout>
             <Layout.Header
               style={{ padding: 0 }}
             >
               <Menu theme="dark" mode="horizontal" style={{ float: "right" }}>
-                {authorized ? (
+                {isLoggedIn ? (
                   <Menu.Item key="1" onClick={onClickLogout}>Logout</Menu.Item>
                 ) : (
                   <Menu.Item key="2" onClick={onClickLogin} >Login</Menu.Item>
@@ -70,7 +70,11 @@ const LayoutWrapper = ({ isLoggedIn, children, logout }) => {
               </Menu>
             </Layout.Header>
             <Layout.Content>
-              <div className="site-layout-background" style={{ minHeight: "100vh", padding: 24 }}>{children}</div>
+              <div
+                className="site-layout-background"
+                style={{ minHeight: "100vh", padding: 24 }}>
+                {children}
+              </div>
             </Layout.Content>
           </Layout>
         </Layout.Content>

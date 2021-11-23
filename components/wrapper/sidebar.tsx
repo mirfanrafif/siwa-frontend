@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { UnorderedListOutlined, TransactionOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { AppState } from "../../reduxes/store";
+import { AppState } from "../../utils/reduxes/store";
 
 const { Title } = Typography;
 

@@ -25,8 +25,13 @@ if (typeof localStorage !== "undefined") {
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case DEAUTHENTICATE:
+            const logoutObj = {
+                ...state,
+                isLoggedIn: false,
+                user: {}
+            }
             if (typeof localStorage !== "undefined") {
-                localStorage.removeItem('auth')
+                localStorage.setItem('auth', JSON.stringify(logoutObj))
             }
             return {
                 isLoggedIn: false,
@@ -34,6 +39,7 @@ const authReducer = (state = initialState, action) => {
             };
         case AUTHENTICATE:
             const authObj = {
+                ...state,
                 isLoggedIn: true,
                 user: action.payload
             };
@@ -43,11 +49,6 @@ const authReducer = (state = initialState, action) => {
                 console.log('localstorage error')
             }
             return authObj;
-        case RESTORE_AUTH_STATE:
-            return {
-                isLoggedIn: true,
-                user: action.payload.user
-            };
         default:
             return state;
     }
