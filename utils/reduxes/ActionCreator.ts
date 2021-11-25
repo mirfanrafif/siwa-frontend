@@ -1,4 +1,5 @@
-import { RESTORE_AUTH_STATE, AUTHENTICATE, DEAUTHENTICATE, SET_LOADING } from "./ActionConstants";
+import MenuMakanan from "../models/menu";
+import { RESTORE_AUTH_STATE, AUTHENTICATE, DEAUTHENTICATE, SET_LOADING, ADD_CART } from "./ActionConstants";
 
 export const authenticateAction = (user) => {
     return {
@@ -15,10 +16,10 @@ export const deAuthenticateAction = () => {
 };
 
 
-export const loadingAction = (loadingState) => {
+export const addKeranjangAction = (item: MenuMakanan) => {
     return {
-        type: SET_LOADING,
-        payload: loadingState
+        type: ADD_CART,
+        payload: item
     }
 };
 
@@ -63,8 +64,8 @@ export const logout = () => {
     }
 };
 
-export const setLoading = (loading) => {
+export const addToCart = (menu: MenuMakanan) => {
     return async dispatch => {
-        dispatch(loadingAction(loading))
+        dispatch(addKeranjangAction(menu))
     }
 }

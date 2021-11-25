@@ -6,37 +6,14 @@ import MenuList from '../../components/menu/MenuList'
 import KeranjangList from '../../components/menu/KeranjangList'
 import Keranjang from '../../utils/models/keranjang'
 import Container from '../../components/wrapper/Container'
-import { setLoading } from '../../utils/reduxes/ActionCreator'
 import { connect } from 'react-redux'
+import { addToCart } from '../../utils/reduxes/ActionCreator'
+import { AppState } from '../../utils/reduxes/store'
 
-export function MenuKasir() {
+export function MenuKasir({ keranjang, addToCart }) {
 
-    const [listKeranjang, setListKeranjang] = useState(Array<Keranjang>())
     const [menuData, setMenuData] = useState(Array<MenuMakanan>())
     const { getMenu } = MenuService()
-
-    const addItemToKeranjang = (item: MenuMakanan) => {
-        const menuIndex = findIndexMenuInKeranjang(item)
-        const newListKeranjang = listKeranjang
-        if (menuIndex != -1) {
-            newListKeranjang[menuIndex].jumlah++;
-        } else {
-            const keranjangItem: Keranjang = {
-                menu: item,
-                jumlah: 1
-            }
-            newListKeranjang.push(keranjangItem)
-        }
-        setListKeranjang([...newListKeranjang])
-    }
-
-    const findIndexMenuInKeranjang = (item: MenuMakanan) => {
-        var index = -1
-        listKeranjang.forEach((element, key) => {
-            if (element.menu.id == item.id) index = key
-        });
-        return index
-    }
 
     useEffect(() => {
         getMenu().then((data) => {
@@ -49,15 +26,19 @@ export function MenuKasir() {
             <Row gutter={20}>
                 <Col span={18}>
                     <Typography.Title level={3}>Menu Makanan</Typography.Title>
-                    <MenuList menuData={menuData} onAddItem={addItemToKeranjang} />
+                    <MenuList menuData={menuData} onAddItem={(item: MenuMakanan) => { addToCart(item) }} />
                 </Col>
                 <Col span={6}>
                     <Typography.Title level={3}>Keranjang</Typography.Title>
-                    <KeranjangList listKeranjang={listKeranjang} />
+                    <KeranjangList listKeranjang={keranjang} />
                 </Col>
             </Row>
         </Container>
     )
 }
 
-export default connect(null, { setLoading })(MenuKasir)
+function mapStateToProps(state: AppState) {
+    return { keranjang: state.keranjang }
+}
+
+export default connect(mapStateToProps, { addToCart })(MenuKasir)

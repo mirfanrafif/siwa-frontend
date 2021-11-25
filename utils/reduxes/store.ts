@@ -2,11 +2,12 @@ import { combineReducers } from 'redux'
 import AuthReducer from "./AuthReducer";
 import { configureStore } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper';
-import loadingReducer from './LoadingReducer';
+import keranjangReducer from './KeranjangReducer';
 
 const store = () => configureStore({
     reducer: combineReducers({
-        auth: AuthReducer
+        auth: AuthReducer,
+        keranjang: keranjangReducer
     }),
     preloadedState: {},
     devTools: true
