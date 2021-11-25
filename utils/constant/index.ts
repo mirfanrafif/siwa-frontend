@@ -1,1 +1,1 @@
-export const EXT_API = "http://localhost:3000";
+export const EXT_API = "http://localhost:8000";

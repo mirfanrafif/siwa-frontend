@@ -8,9 +8,8 @@ import Keranjang from '../../utils/models/keranjang'
 import Container from '../../components/wrapper/Container'
 import { setLoading } from '../../utils/reduxes/ActionCreator'
 import { connect } from 'react-redux'
-import { AppState } from '../../utils/reduxes/store'
 
-export function MenuKasir({ loading, setLoading }) {
+export function MenuKasir() {
 
     const [listKeranjang, setListKeranjang] = useState(Array<Keranjang>())
     const [menuData, setMenuData] = useState(Array<MenuMakanan>())
@@ -41,10 +40,9 @@ export function MenuKasir({ loading, setLoading }) {
 
     useEffect(() => {
         getMenu().then((data) => {
-            setLoading(false)
             setMenuData(data)
         })
-    }, [getMenu, setLoading])
+    }, [getMenu])
 
     return (
         <Container>
@@ -62,4 +60,4 @@ export function MenuKasir({ loading, setLoading }) {
     )
 }
 
-export default connect((state: AppState) => { state.loading }, { setLoading })
+export default connect(null, { setLoading })(MenuKasir)

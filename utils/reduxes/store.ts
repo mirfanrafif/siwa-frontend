@@ -6,8 +6,7 @@ import loadingReducer from './LoadingReducer';
 
 const store = () => configureStore({
     reducer: combineReducers({
-        auth: AuthReducer,
-        loading: loadingReducer
+        auth: AuthReducer
     }),
     preloadedState: {},
     devTools: true
@@ -17,4 +16,3 @@ export type AppStore = ReturnType<typeof store>;
 export type AppState = ReturnType<AppStore['getState']>
 
 export const wrapper = createWrapper(store, { debug: true })
-

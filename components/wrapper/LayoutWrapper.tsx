@@ -6,44 +6,24 @@ import { connect } from "react-redux";
 import { logout, setLoading } from "../../utils/reduxes/ActionCreator";
 import { AppState } from "../../utils/reduxes/store";
 import router from "next/router";
-import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
 
-const LayoutWrapper = ({ auth, loading, setLoading, children, logout }) => {
-
-  const publicPaths = ['/login'];
+const LayoutWrapper = ({ auth, children, logout }) => {
 
   useEffect(() => {
-    setLoading(true)
-    authCheck(router.asPath)
-    // set authorized to false to hide page content while changing routes
-    // run auth check on route change
-    router.events.on('routeChangeComplete', authCheck)
-    return () => {
-      router.events.off('routeChangeComplete', authCheck);
-      setLoading(false)
-    }
-  }, [])
-
-  const authCheck = (url) => {
-    const path = url.split('?')[0];
+    const publicPaths = ['/login'];
+    const path = router.asPath.split('?')[0];
     if (!auth.isLoggedIn && !publicPaths.includes(path)) {
       router.push({
         pathname: '/login',
         query: { returnUrl: router.asPath }
       });
     }
-  }
+  }, [auth.isLoggedIn])
 
   const onClickLogout = () => {
     logout()
     router.push('/login')
   }
-
-  const onClickLogin = () => {
-    router.push('/login')
-  }
-
-  const loadingSpin = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   return (
     <>
@@ -69,7 +49,8 @@ const LayoutWrapper = ({ auth, loading, setLoading, children, logout }) => {
                 {auth.isLoggedIn ? (
                   <Menu.Item key="1" onClick={onClickLogout}>Logout</Menu.Item>
                 ) : (
-                  <Menu.Item key="1" onClick={onClickLogin} >Login</Menu.Item>
+                  <Menu.Item key="1" onClick={() => { router.push('/login') }
+                  } >Login</Menu.Item>
                 )}
               </Menu>
             </Layout.Header>
