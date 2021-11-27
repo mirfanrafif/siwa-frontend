@@ -26,10 +26,7 @@ export function MenuKasir({ addToCart }) {
 
         <Row gutter={20}>
             <Col span={16}>
-                <Container>
-                    <Typography.Title level={3}>Menu Makanan</Typography.Title>
-                    <MenuList menuData={menuData} onAddItem={(item: MenuMakanan) => { addToCart(item) }} />
-                </Container>
+                <MenuList menuData={menuData} onAddItem={(item: MenuMakanan) => { addToCart(item) }} />
             </Col>
             <Col span={8}>
                 <Container>

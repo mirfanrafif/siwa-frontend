@@ -5,6 +5,7 @@ import styles from '../../styles/Main.module.css'
 import Keranjang from '../../utils/models/keranjang'
 import { DeleteOutlined } from '@ant-design/icons'
 import { setCart, deleteCart } from '../../utils/reduxes/cart/CartActions'
+import Container from '../wrapper/Container'
 
 function KeranjangItem({ keranjang, setCart, deleteCart }: { keranjang: Keranjang }) {
 
@@ -21,22 +22,49 @@ function KeranjangItem({ keranjang, setCart, deleteCart }: { keranjang: Keranjan
     }
 
     return (
-        <div className={styles.container}>
-            <Row>
+        <div style={{
+            marginTop: 20,
+            marginBottom: 20,
+            display: 'flex',
+            flexDirection: 'row'
+        }}>
+
+            <div style={{ flex: 1 }}>
+                <img
+                    alt="example"
+                    src={keranjang.menu.url_gambar}
+                    style={{ height: 64, width: 64, objectFit: 'cover' }}
+                />
+            </div>
+
+            <div style={{ flex: 3 }}>
+                <b>{keranjang.menu.nama}</b>
+                <br /> {keranjang.menu.harga}
+            </div>
+
+            <div style={{ flex: 1 }}>
+                <InputNumber value={keranjang.jumlah} onChange={onKeranjangJumlahChange} />
+            </div>
+
+            <div style={{ flex: 1 }}>
+                <Button onClick={onDeleteKeranjangItemClick}><DeleteOutlined /></Button>
+            </div>
+
+
+            {/* <Row>
                 <Col span={6}>
                     <img alt="example" src={keranjang.menu.url_gambar} style={{ height: 64, width: 64, objectFit: 'cover' }} />
                 </Col>
                 <Col span={11}>
-                    <b>{keranjang.menu.nama}</b>
-                    <br /> {keranjang.menu.harga}
+
                 </Col>
                 <Col span={6}>
-                    <InputNumber value={keranjang.jumlah} onChange={onKeranjangJumlahChange} />
+                
                 </Col>
                 <Col span={1}>
-                    <Button onClick={onDeleteKeranjangItemClick}><DeleteOutlined /></Button>
+                    
                 </Col>
-            </Row>
+            </Row> */}
         </div>
     )
 }

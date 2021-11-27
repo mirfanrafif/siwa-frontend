@@ -11,11 +11,11 @@ function Login({ isLoggedIn, user, login }: { isLoggedIn: boolean, user: User, l
     const onFinish = (values: any) => {
         const authData = {
             ...values,
-            role: 'kasir'
+            role: 'admin'
         }
         login(authData)
-        if (authData.role == 'kasir') {
-            router.push('/kasir/menu')
+        if (authData.role == 'admin') {
+            router.push('/admin/menu')
         }
     }
 

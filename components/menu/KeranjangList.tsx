@@ -7,11 +7,12 @@ import { connect } from 'react-redux'
 import { AppState } from '../../utils/reduxes/store'
 import router from 'next/router'
 import { KeranjangState } from '../../utils/reduxes/cart/KeranjangReducer'
+import Container from '../wrapper/Container'
 
 function KeranjangList({ keranjangState }: { keranjangState: KeranjangState }) {
 
     return (
-        <div>
+        <Container>
             {keranjangState.keranjang.map((item) => {
                 return (
                     <KeranjangItem key={item.menu.id} keranjang={item} />
@@ -22,7 +23,9 @@ function KeranjangList({ keranjangState }: { keranjangState: KeranjangState }) {
                 <Typography.Title level={3} style={{ flex: 1 }}>Total</Typography.Title>
                 <Typography.Title level={3} style={{ flex: 1, textAlign: 'right' }}>Rp. {keranjangState.total}</Typography.Title>
             </div>
-        </div>
+        </Container>
+
+
     )
 }
 

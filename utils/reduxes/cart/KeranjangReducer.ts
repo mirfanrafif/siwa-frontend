@@ -58,7 +58,6 @@ const keranjangReducer = (state = initialState, action) => {
             const deleteIndex = newKeranjangListDelete.findIndex((element) => {
                 return element.menu.id == action.payload.menu.id
             })
-            console.log(deleteIndex)
             newKeranjangListDelete.splice(deleteIndex, 1)
             const newKeranjangStateDelete: KeranjangState = {
                 ...state, keranjang: newKeranjangListDelete, total: countTotal(newKeranjangListDelete)
