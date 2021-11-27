@@ -3,32 +3,33 @@ import React, { useEffect, useState } from 'react'
 import Keranjang from '../../utils/models/keranjang'
 import KeranjangItem from './KeranjangItem'
 import styles from '../../styles/Main.module.css'
+import { connect } from 'react-redux'
+import { AppState } from '../../utils/reduxes/store'
+import router from 'next/router'
+import { KeranjangState } from '../../utils/reduxes/KeranjangReducer'
 
-export default function KeranjangList({ listKeranjang }: { listKeranjang: Keranjang[] }) {
-
-    const [total, setTotal] = useState(0)
-
-    useEffect(() => {
-        var totalTemp: number = 0
-        listKeranjang.forEach((value) => {
-            totalTemp += (value.menu.harga * value.jumlah)
-        })
-        setTotal(totalTemp)
-    }, [listKeranjang, setTotal])
+function KeranjangList({ keranjangState }: { keranjangState: KeranjangState }) {
 
     return (
         <div>
-            {listKeranjang.map((item) => {
+            {keranjangState.keranjang.map((item) => {
                 return (
                     <KeranjangItem key={item.menu.id} keranjang={item} />
                 )
             })}
             <Divider />
-            <div className={styles.totalflex}>
-                <div style={{ flex: 1 }} >Total</div>
-                <Typography.Title level={3} style={{ flex: 1, textAlign: 'right' }}>Rp. {total}</Typography.Title>
+            <div className={styles.totalFlex}>
+                <Typography.Title level={3} style={{ flex: 1 }}>Total</Typography.Title>
+                <Typography.Title level={3} style={{ flex: 1, textAlign: 'right' }}>Rp. {keranjangState.total}</Typography.Title>
             </div>
-            <Button type="primary" block>Selesai</Button>
         </div>
     )
 }
+
+function mapStateToProps(state: AppState) {
+    return {
+        keranjangState: state.keranjang
+    }
+}
+
+export default connect(mapStateToProps)(KeranjangList)

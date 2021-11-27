@@ -3,17 +3,20 @@ import router from 'next/router'
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Container from '../components/wrapper/Container'
+import User from '../utils/models/User'
 import { login } from '../utils/reduxes/ActionCreator'
 import { AppState } from '../utils/reduxes/store'
 
-function Login({ isLoggedIn, user, login }) {
+function Login({ isLoggedIn, user, login }: { isLoggedIn: boolean, user: User, login: (loginDetails: any) => (dispatch: any) => void }) {
     const onFinish = (values: any) => {
         const authData = {
             ...values,
-            role: 'admin'
+            role: 'kasir'
         }
         login(authData)
-        router.push('/admin/menu')
+        if(authData.role == 'kasir') {
+            router.push('/kasir/menu')
+        }
     }
 
     useEffect(() => {

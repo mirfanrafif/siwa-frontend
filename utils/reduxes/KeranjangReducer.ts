@@ -1,11 +1,19 @@
-import { AUTHENTICATE, DEAUTHENTICATE, ADD_CART } from "./ActionConstants";
+import { AUTHENTICATE, DEAUTHENTICATE, ADD_CART, CLEAR_CART } from "./ActionConstants";
 import Keranjang from '../models/keranjang'
 
-var initialState: Keranjang[] = []
+export type KeranjangState = {
+    keranjang: Keranjang[],
+    total: number
+}
+
+var initialState: KeranjangState = {
+    keranjang: [],
+    total: 0
+}
 if (typeof localStorage !== "undefined") {
-    const keranjangLocal = JSON.parse(localStorage.getItem('cart') || "[]")
+    const keranjangLocal = localStorage.getItem('cart')
     if (keranjangLocal) {
-        initialState = keranjangLocal
+        initialState = JSON.parse(keranjangLocal)
     }
 }
 
@@ -13,19 +21,42 @@ if (typeof localStorage !== "undefined") {
 const keranjangReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_CART:
-            const newListKeranjang: Keranjang[] = [...state]
-            const menuIndex = newListKeranjang.findIndex((keranjang: Keranjang) => {
+            var newKeranjangList = [...state.keranjang]
+
+            //add to keranjang
+            const menuIndex = newKeranjangList.findIndex((keranjang: Keranjang) => {
                 return keranjang.menu.id == action.payload.id
             })
             if (menuIndex > -1) {
-                const newKeranjang = { ...newListKeranjang[menuIndex] }
+                const newKeranjang = { ...newKeranjangList[menuIndex] }
                 newKeranjang.jumlah += 1;
-                newListKeranjang[menuIndex] = newKeranjang
+                newKeranjangList[menuIndex] = newKeranjang
             } else {
-                newListKeranjang.push({ menu: action.payload, jumlah: 1 })
+                newKeranjangList.push({ menu: action.payload, jumlah: 1 })
             }
-            localStorage.setItem('cart', JSON.stringify(newListKeranjang))
-            return newListKeranjang
+
+            //count total
+            var newTotal: number = 0
+            newKeranjangList.forEach((value) => {
+                newTotal += (value.menu.harga * value.jumlah)
+            })
+            const newKeranjangState: KeranjangState = {
+                ...state,
+                keranjang: newKeranjangList,
+                total: newTotal
+            }
+
+            localStorage.setItem('cart', JSON.stringify(newKeranjangState))
+            return newKeranjangState
+
+        case CLEAR_CART:
+            const newKeranjang: KeranjangState = {
+                ...state,
+                total: 0,
+                keranjang: []
+            }
+            localStorage.setItem('cart', JSON.stringify(newKeranjang))
+            return newKeranjang
         default:
             return state;
     }

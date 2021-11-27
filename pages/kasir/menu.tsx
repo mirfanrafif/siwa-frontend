@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Row, Typography } from 'antd'
+import { Button, Col, Row, Typography } from 'antd'
 import MenuMakanan from '../../utils/models/menu'
 import { MenuService } from '../../utils/services/MenuService'
 import MenuList from '../../components/menu/MenuList'
@@ -9,8 +9,9 @@ import Container from '../../components/wrapper/Container'
 import { connect } from 'react-redux'
 import { addToCart } from '../../utils/reduxes/ActionCreator'
 import { AppState } from '../../utils/reduxes/store'
+import router from 'next/router'
 
-export function MenuKasir({ keranjang, addToCart }) {
+export function MenuKasir({ addToCart }) {
 
     const [menuData, setMenuData] = useState(Array<MenuMakanan>())
     const { getMenu } = MenuService()
@@ -22,23 +23,25 @@ export function MenuKasir({ keranjang, addToCart }) {
     }, [getMenu])
 
     return (
-        <Container>
-            <Row gutter={20}>
-                <Col span={18}>
+
+        <Row gutter={20}>
+            <Col span={18}>
+                <Container>
                     <Typography.Title level={3}>Menu Makanan</Typography.Title>
                     <MenuList menuData={menuData} onAddItem={(item: MenuMakanan) => { addToCart(item) }} />
-                </Col>
-                <Col span={6}>
+                </Container>
+            </Col>
+            <Col span={6}>
+                <Container>
                     <Typography.Title level={3}>Keranjang</Typography.Title>
-                    <KeranjangList listKeranjang={keranjang} />
-                </Col>
-            </Row>
-        </Container>
+                    <KeranjangList />
+                    <Button type="primary" block onClick={() => { router.push('/kasir/transaksi') }}>Pembayaran</Button>
+                </Container>
+            </Col>
+        </Row>
     )
 }
 
-function mapStateToProps(state: AppState) {
-    return { keranjang: state.keranjang }
-}
 
-export default connect(mapStateToProps, { addToCart })(MenuKasir)
+
+export default connect(null, { addToCart })(MenuKasir)

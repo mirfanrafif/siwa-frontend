@@ -27,7 +27,7 @@ export default function FormMenu() {
 
     useEffect(() => {
         const path = router.asPath
-        const id = Number.parseInt(path.split('/').pop())
+        const id = Number.parseInt(path.split('/').pop() ?? "0")
         console.log(id)
         setMenuId(id)
         if (menuId !== 0) {
