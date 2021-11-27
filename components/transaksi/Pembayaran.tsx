@@ -2,7 +2,7 @@ import { Button, Col, Divider, Input, Row, Typography } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { connect, useSelector } from 'react-redux'
 import { AppState } from '../../utils/reduxes/store'
-import { clearCart } from '../../utils/reduxes/ActionCreator'
+import { clearCart } from '../../utils/reduxes/cart/CartActions'
 import router from 'next/router'
 import Container from '../wrapper/Container'
 

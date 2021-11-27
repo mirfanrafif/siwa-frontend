@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import AuthReducer from "./AuthReducer";
+import AuthReducer from "./auth/AuthReducer";
 import { configureStore } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper';
-import keranjangReducer from './KeranjangReducer';
+import keranjangReducer from './cart/KeranjangReducer';
 
 const store = () => configureStore({
     reducer: combineReducers({

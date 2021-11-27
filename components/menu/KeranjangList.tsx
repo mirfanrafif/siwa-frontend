@@ -6,7 +6,7 @@ import styles from '../../styles/Main.module.css'
 import { connect } from 'react-redux'
 import { AppState } from '../../utils/reduxes/store'
 import router from 'next/router'
-import { KeranjangState } from '../../utils/reduxes/KeranjangReducer'
+import { KeranjangState } from '../../utils/reduxes/cart/KeranjangReducer'
 
 function KeranjangList({ keranjangState }: { keranjangState: KeranjangState }) {
 

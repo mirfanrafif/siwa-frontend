@@ -1,5 +1,4 @@
-import MenuMakanan from "../models/menu";
-import { RESTORE_AUTH_STATE, AUTHENTICATE, DEAUTHENTICATE, SET_LOADING, ADD_CART, CLEAR_CART } from "./ActionConstants";
+import { AUTHENTICATE, DEAUTHENTICATE } from "../ActionConstants";
 
 export const authenticateAction = (user) => {
     return {
@@ -14,21 +13,6 @@ export const deAuthenticateAction = () => {
         type: DEAUTHENTICATE,
     };
 };
-
-
-export const addKeranjangAction = (item: MenuMakanan) => {
-    return {
-        type: ADD_CART,
-        payload: item
-    }
-};
-
-export const cartCleanAction = () => {
-    return {
-        type: CLEAR_CART
-    }
-};
-
 
 export const login = (loginDetails) => {
     return (dispatch) => {
@@ -65,19 +49,6 @@ export const signUp = signUpDetails => {
 
 export const logout = () => {
     return dispatch => {
-        console.log("logout action created")
         dispatch(deAuthenticateAction())
     }
 };
-
-export const addToCart = (menu: MenuMakanan) => {
-    return async dispatch => {
-        dispatch(addKeranjangAction(menu))
-    }
-}
-
-export const clearCart = () => {
-    return async dispatch => {
-        dispatch(cartCleanAction())
-    }
-}

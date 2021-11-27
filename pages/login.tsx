@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Container from '../components/wrapper/Container'
 import User from '../utils/models/User'
-import { login } from '../utils/reduxes/ActionCreator'
+import { login } from '../utils/reduxes/auth/AuthActions'
 import { AppState } from '../utils/reduxes/store'
 
 function Login({ isLoggedIn, user, login }: { isLoggedIn: boolean, user: User, login: (loginDetails: any) => (dispatch: any) => void }) {
@@ -14,7 +14,7 @@ function Login({ isLoggedIn, user, login }: { isLoggedIn: boolean, user: User, l
             role: 'kasir'
         }
         login(authData)
-        if(authData.role == 'kasir') {
+        if (authData.role == 'kasir') {
             router.push('/kasir/menu')
         }
     }

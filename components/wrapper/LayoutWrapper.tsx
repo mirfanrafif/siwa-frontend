@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Layout, Menu, Spin } from "antd";
 import Sidebar from "./sidebar";
 import { connect } from "react-redux";
-import { logout } from "../../utils/reduxes/ActionCreator";
+import { logout } from "../../utils/reduxes/auth/AuthActions";
 import { AppState } from "../../utils/reduxes/store";
 import router from "next/router";
 

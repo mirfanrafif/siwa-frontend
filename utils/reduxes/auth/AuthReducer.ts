@@ -1,4 +1,4 @@
-import { RESTORE_AUTH_STATE, AUTHENTICATE, DEAUTHENTICATE } from "./ActionConstants";
+import { RESTORE_AUTH_STATE, AUTHENTICATE, DEAUTHENTICATE } from "../ActionConstants";
 
 var initialState = {
     isLoggedIn: false,

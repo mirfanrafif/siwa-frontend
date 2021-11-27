@@ -5,7 +5,7 @@ import { MenuService } from "../../utils/services/MenuService";
 import { useRouter } from "next/dist/client/router";
 import { connect } from "react-redux";
 import { AppState } from "../../utils/reduxes/store";
-import { setLoading } from '../../utils/reduxes/ActionCreator'
+import { setLoading } from '../../utils/reduxes/cart/CartActions'
 
 export function Menu() {
   const [listMakanan, setListMakanan] = useState(Array<MenuMakanan>());
@@ -24,7 +24,6 @@ export function Menu() {
   const onRowClick = (record, rowIndex) => {
     return {
       onClick: (event) => {
-        console.log(record.id);
         router.push(`/admin/menu/${record.id}`);
       },
     };

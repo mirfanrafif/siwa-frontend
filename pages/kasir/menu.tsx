@@ -7,7 +7,7 @@ import KeranjangList from '../../components/menu/KeranjangList'
 import Keranjang from '../../utils/models/keranjang'
 import Container from '../../components/wrapper/Container'
 import { connect } from 'react-redux'
-import { addToCart } from '../../utils/reduxes/ActionCreator'
+import { addToCart } from '../../utils/reduxes/cart/CartActions'
 import { AppState } from '../../utils/reduxes/store'
 import router from 'next/router'
 
@@ -25,13 +25,13 @@ export function MenuKasir({ addToCart }) {
     return (
 
         <Row gutter={20}>
-            <Col span={18}>
+            <Col span={16}>
                 <Container>
                     <Typography.Title level={3}>Menu Makanan</Typography.Title>
                     <MenuList menuData={menuData} onAddItem={(item: MenuMakanan) => { addToCart(item) }} />
                 </Container>
             </Col>
-            <Col span={6}>
+            <Col span={8}>
                 <Container>
                     <Typography.Title level={3}>Keranjang</Typography.Title>
                     <KeranjangList />
