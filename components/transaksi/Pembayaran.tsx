@@ -48,7 +48,7 @@ function Pembayaran({ clearCart }) {
                     <Typography.Title level={5}>Bayar</Typography.Title>
                 </Col>
                 <Col span={8}>
-                    <InputNumber prefix={"Rp. "} value={bayar} onChange={onBayarFieldChange} />
+                    <InputNumber addonBefore="Rp. " value={bayar} onChange={onBayarFieldChange} />
                 </Col>
             </Row>
             <Divider />

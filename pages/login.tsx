@@ -15,7 +15,7 @@ function Login({ isLoggedIn, user, login }: { isLoggedIn: boolean, user: User, l
         }
         login(authData)
         if (authData.role == 'admin') {
-            router.push('/admin/menu')
+            router.push('/kasir/menu')
         }
     }
 

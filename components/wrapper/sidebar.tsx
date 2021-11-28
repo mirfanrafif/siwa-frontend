@@ -10,7 +10,7 @@ const { Title } = Typography;
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState("1")
+  const [selectedMenu, setSelectedMenu] = useState("3")
   const userData = useSelector((state: AppState) => state.auth.user)
 
   const onCollapse = (collapsed: boolean) => {

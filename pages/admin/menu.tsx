@@ -4,8 +4,6 @@ import MenuMakanan from "../../utils/models/menu";
 import { MenuService } from "../../utils/services/MenuService";
 import { useRouter } from "next/dist/client/router";
 import { connect } from "react-redux";
-import { AppState } from "../../utils/reduxes/store";
-import { setLoading } from '../../utils/reduxes/cart/CartActions'
 
 export function Menu() {
   const [listMakanan, setListMakanan] = useState(Array<MenuMakanan>());

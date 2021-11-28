@@ -44,7 +44,7 @@ export default function FormMenu({ menu }: { menu: MenuMakanan }) {
                 <Form.Item label="Harga Makanan per porsi" name="harga" rules={[{
                     required: true, message: 'Harga makanan harus diisi'
                 }]}>
-                    <InputNumber />
+                    <InputNumber addonBefore="Rp. " />
                 </Form.Item>
 
                 <Form.Item label="Gambar" name="url_gambar" >

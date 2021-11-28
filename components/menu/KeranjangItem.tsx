@@ -37,7 +37,7 @@ function KeranjangItem({ keranjang, setCart, deleteCart }: { keranjang: Keranjan
                 />
             </div>
 
-            <div style={{ flex: 3 }}>
+            <div style={{ flex: 2 }}>
                 <b>{keranjang.menu.nama}</b>
                 <br /> {keranjang.menu.harga}
             </div>
@@ -50,21 +50,9 @@ function KeranjangItem({ keranjang, setCart, deleteCart }: { keranjang: Keranjan
                 <Button onClick={onDeleteKeranjangItemClick}><DeleteOutlined /></Button>
             </div>
 
-
-            {/* <Row>
-                <Col span={6}>
-                    <img alt="example" src={keranjang.menu.url_gambar} style={{ height: 64, width: 64, objectFit: 'cover' }} />
-                </Col>
-                <Col span={11}>
-
-                </Col>
-                <Col span={6}>
-                
-                </Col>
-                <Col span={1}>
-                    
-                </Col>
-            </Row> */}
+            <div style={{ flex: 1 }}>
+                <b>Rp. {keranjang.menu.harga * keranjang.jumlah}</b>
+            </div>
         </div>
     )
 }
