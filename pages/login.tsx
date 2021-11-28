@@ -9,23 +9,16 @@ import { AppState } from '../utils/reduxes/store'
 
 function Login({ isLoggedIn, user, login }: { isLoggedIn: boolean, user: User, login: (loginDetails: any) => (dispatch: any) => void }) {
     const onFinish = (values: any) => {
-        const authData = {
-            ...values,
-            role: 'admin'
-        }
-        login(authData)
-        if (authData.role == 'admin') {
-            router.push('/kasir/menu')
-        }
+        login({ username: values.username, password: values.password })
     }
 
     useEffect(() => {
         if (isLoggedIn) {
-            switch (user.role) {
-                case 'admin':
+            switch (user.level) {
+                case 1:
                     router.push('/admin/menu')
                     break;
-                case 'kasir':
+                case 0:
                     router.push('/kasir/menu')
                     break;
                 default:

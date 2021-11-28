@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+import UserService from "../../services/UserService";
 import { AUTHENTICATE, DEAUTHENTICATE } from "../ActionConstants";
 
 export const authenticateAction = (user) => {
@@ -19,8 +21,12 @@ export const login = (loginDetails) => {
         try {
             dispatch(deAuthenticateAction());
             // login code. And storing data in result variable
-            const result = loginDetails
-            dispatch(authenticateAction(result));
+            UserService().login(loginDetails).then((res) => {
+                dispatch(authenticateAction(res));
+            }).catch((err) => {
+                Swal.fire({ title: "Gagal Login", text: "Terjadi kesalahan saat login" + err, icon: "error" })
+            })
+
         } catch (e) {
             dispatch(deAuthenticateAction());
         }

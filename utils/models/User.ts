@@ -1,7 +1,7 @@
 export default interface User {
     id: number,
     username: string,
-    Nama: string,
-    role: string,
+    nama: string,
+    level: number,
     token: string
 }

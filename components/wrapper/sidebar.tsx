@@ -35,7 +35,7 @@ export default function Sidebar() {
         </div>
       )}
       <Menu theme="dark" mode="inline" selectedKeys={[selectedMenu]} >
-        {userData.role == 'admin' && (
+        {userData.level == 1 && (
           <SubMenu title="Admin">
             <Menu.Item key="1" icon={<UnorderedListOutlined />} onClick={() => { setSelectedMenu("1") }}>
               <Link href="/admin/menu">Menu</Link>
