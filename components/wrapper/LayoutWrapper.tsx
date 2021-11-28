@@ -58,31 +58,27 @@ const LayoutWrapper = ({ auth, children, logout }) => {
           )
         }
         <Layout.Content>
-          {
-            visible && (
-              <Layout>
-                <Layout.Header
-                  style={{ padding: 0 }}
-                >
-                  <Menu theme="dark" mode="horizontal" style={{ float: "right" }}>
-                    {auth.isLoggedIn ? (
-                      <Menu.Item key="1" onClick={onClickLogout}>Logout</Menu.Item>
-                    ) : (
-                      <Menu.Item key="1" onClick={() => { router.push('/login') }
-                      } >Login</Menu.Item>
-                    )}
-                  </Menu>
-                </Layout.Header>
-                <Layout.Content>
-                  <div
-                    className="site-layout-background"
-                    style={{ minHeight: "100vh", padding: 24 }}>
-                    {children}
-                  </div>
-                </Layout.Content>
-              </Layout>
-            )
-          }
+          <Layout>
+            <Layout.Header
+              style={{ padding: 0 }}
+            >
+              <Menu theme="dark" mode="horizontal" style={{ float: "right" }}>
+                {auth.isLoggedIn ? (
+                  <Menu.Item key="1" onClick={onClickLogout}>Logout</Menu.Item>
+                ) : (
+                  <Menu.Item key="1" onClick={() => { router.push('/login') }
+                  } >Login</Menu.Item>
+                )}
+              </Menu>
+            </Layout.Header>
+            <Layout.Content>
+              <div
+                className="site-layout-background"
+                style={{ minHeight: "100vh", padding: 24 }}>
+                {visible && (children)}
+              </div>
+            </Layout.Content>
+          </Layout>
         </Layout.Content>
       </Layout>
     </>

@@ -1,4 +1,4 @@
-import { Form, Input, Select, Upload, Typography, Divider, message, Button } from 'antd'
+import { Form, Input, Select, Upload, Typography, Divider, message, Button, InputNumber } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import { MenuService } from '../../utils/services/MenuService'
@@ -8,13 +8,12 @@ import router from 'next/router'
 import MenuMakanan from '../../utils/models/menu'
 const { Option } = Select;
 
-export default function FormMenu() {
-    const { addMenu, detailMenu, updateMenu } = MenuService()
-    const [menuId, setMenuId] = useState(0)
-    const [menu, setMenu] = useState({} as MenuMakanan)
+export default function FormMenu({ menu }: { menu: MenuMakanan }) {
+    const { addMenu, updateMenu } = MenuService()
+
     const onFinish = (values: any) => {
-        if (menuId > 0) {
-            updateMenu(menuId, values).then(res => {
+        if (menu.id > 0) {
+            updateMenu(menu.id, values).then(res => {
                 router.back()
             })
         } else {
@@ -24,36 +23,6 @@ export default function FormMenu() {
         }
 
     }
-
-    useEffect(() => {
-        const path = router.asPath
-        const id = Number.parseInt(path.split('/').pop() ?? "0")
-        setMenuId(id)
-        if (!isNaN(id)) {
-            detailMenu(menuId).then(res => {
-                console.log(res)
-                setMenu(res)
-            })
-        }
-    }, [detailMenu, menuId])
-
-    // const uploadFileProps = {
-    //     name: 'file',
-    //     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    //     headers: {
-    //         authorization: 'authorization-text',
-    //     },
-    //     onChange(info: UploadChangeParam<UploadFile<any>>) {
-    //         if (info.file.status !== 'uploading') {
-    //             console.log(info.file, info.fileList);
-    //         }
-    //         if (info.file.status === 'done') {
-    //             message.success(`${info.file.name} file uploaded successfully`);
-    //         } else if (info.file.status === 'error') {
-    //             message.error(`${info.file.name} file upload failed.`);
-    //         }
-    //     },
-    // }
 
     return (
         <Container>
@@ -75,11 +44,11 @@ export default function FormMenu() {
                 <Form.Item label="Harga Makanan per porsi" name="harga" rules={[{
                     required: true, message: 'Harga makanan harus diisi'
                 }]}>
-                    <Input />
+                    <InputNumber />
                 </Form.Item>
 
                 <Form.Item label="Gambar" name="url_gambar" >
-                    <Input defaultValue={menu.url_gambar} />
+                    <Input />
                 </Form.Item>
 
                 <Form.Item label="Jenis Menu" name="jenis_menu">

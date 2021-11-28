@@ -11,15 +11,8 @@ export function Menu() {
   const [listMakanan, setListMakanan] = useState(Array<MenuMakanan>());
   const [dataLoading, setDataLoading] = useState(false);
   const { getMenu } = MenuService();
-  const router = useRouter();
 
-  const getData = useCallback(async () => {
-    setDataLoading(true);
-    getMenu().then((res) => {
-      setListMakanan(res);
-      setDataLoading(false);
-    });
-  }, [getMenu]);
+  const router = useRouter();
 
   const onRowClick = (record, rowIndex) => {
     return {
@@ -34,8 +27,12 @@ export function Menu() {
   }
 
   useEffect(() => {
-    getData();
-  }, [getData]);
+    setDataLoading(true);
+    getMenu().then((res) => {
+      setListMakanan(res);
+      setDataLoading(false);
+    });
+  }, []);
 
   const columns = [
     {
@@ -91,4 +88,4 @@ export function Menu() {
   );
 }
 
-export default connect((state: AppState) => state.loading, { setLoading })(Menu)
+export default connect()(Menu)

@@ -10,17 +10,12 @@ export default function Transaksi() {
 
   const { getMenu } = MenuService()
 
-  const getData = useCallback(async () => {
-    setloading(true);
+  useEffect(() => {
     getMenu().then((res) => {
       setListTransaksi(res);
       setloading(false);
     });
-  }, [getMenu]);
-
-  useEffect(() => {
-    getData();
-  }, [getData]);
+  }, []);
 
   const columns = [
     {
@@ -47,7 +42,7 @@ export default function Transaksi() {
           <Typography.Title level={3}>Transaksi</Typography.Title>
         </Col>
         <Col span={6}>
-          
+
         </Col>
       </Row>
       {loading ? (

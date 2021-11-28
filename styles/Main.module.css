@@ -1,6 +1,7 @@
 .container {
     background: white;
     padding: 20pt;
+    margin-bottom: 20pt;
 }
 
 .totalFlex {

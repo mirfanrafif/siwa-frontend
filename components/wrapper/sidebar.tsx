@@ -16,33 +16,6 @@ export default function Sidebar() {
   const onCollapse = (collapsed: boolean) => {
     setCollapsed(collapsed);
   };
-
-  const renderMenu = () => {
-    if (userData && userData.role == "admin") {
-      return (
-        <Menu theme="dark" mode="inline" selectedKeys={[selectedMenu]}>
-          <Menu.Item key="1" icon={<UnorderedListOutlined />} onClick={() => { setSelectedMenu("1") }}>
-            <Link href="/admin/menu">Menu</Link>
-          </Menu.Item>
-          <Menu.Item key="2" icon={<TransactionOutlined />} onClick={() => { setSelectedMenu("2") }}>
-            <Link href="/admin/transaksi">Transaksi</Link>
-          </Menu.Item>
-        </Menu>
-      )
-    } else if (userData && userData.role == "kasir") {
-      return (
-        <Menu theme="dark" mode="inline" selectedKeys={[selectedMenu]}>
-          <Menu.Item key="1" icon={<UnorderedListOutlined />} onClick={() => { setSelectedMenu("1") }}>
-            <Link href="/kasir/menu">Menu</Link>
-          </Menu.Item>
-          <Menu.Item key="2" icon={<TransactionOutlined />} onClick={() => { setSelectedMenu("2") }}>
-            <Link href="/kasir/transaksi">Transaksi</Link>
-          </Menu.Item>
-        </Menu>
-      )
-    }
-  }
-
   return (
     <Layout.Sider
       style={{}}

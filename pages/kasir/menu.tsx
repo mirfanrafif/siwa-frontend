@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Button, Col, Row, Typography } from 'antd'
 import MenuMakanan from '../../utils/models/menu'
 import { MenuService } from '../../utils/services/MenuService'
@@ -15,12 +15,18 @@ export function MenuKasir({ addToCart }) {
 
     const [menuData, setMenuData] = useState(Array<MenuMakanan>())
     const { getMenu } = MenuService()
+    const getMenuCallback = useCallback(
+        () => {
+            return getMenu()
+        },
+        [],
+    )
 
     useEffect(() => {
-        getMenu().then((data) => {
+        getMenuCallback().then((data) => {
             setMenuData(data)
         })
-    }, [getMenu])
+    }, [getMenuCallback])
 
     return (
 
@@ -31,9 +37,12 @@ export function MenuKasir({ addToCart }) {
             <Col span={8}>
                 <Container>
                     <Typography.Title level={3}>Keranjang</Typography.Title>
-                    <KeranjangList />
+                </Container>
+                <KeranjangList />
+                <Container>
                     <Button type="primary" block onClick={() => { router.push('/kasir/transaksi') }}>Pembayaran</Button>
                 </Container>
+
             </Col>
         </Row>
     )

@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Input, Row, Typography } from 'antd'
+import { Button, Col, Divider, Input, InputNumber, Row, Typography } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { connect, useSelector } from 'react-redux'
 import { AppState } from '../../utils/reduxes/store'
@@ -27,12 +27,11 @@ function Pembayaran({ clearCart }) {
         }
     }
 
-    const onBayarFieldChange = (event) => {
-        var nominal = parseInt(event.target.value.replace(/^0+/, ''), 10)
-        if (nominal <= 0) {
+    const onBayarFieldChange = (value) => {
+        if (value <= 0) {
             setBayar(0)
         } else {
-            setBayar(nominal)
+            setBayar(value)
         }
     }
 
@@ -49,7 +48,7 @@ function Pembayaran({ clearCart }) {
                     <Typography.Title level={5}>Bayar</Typography.Title>
                 </Col>
                 <Col span={8}>
-                    <Input prefix={"Rp. "} value={bayar} onChange={onBayarFieldChange} type="number" />
+                    <InputNumber prefix={"Rp. "} value={bayar} onChange={onBayarFieldChange} />
                 </Col>
             </Row>
             <Divider />
