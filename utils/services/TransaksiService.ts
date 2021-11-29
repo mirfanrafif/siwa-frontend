@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import { EXT_API } from "../constant";
+import { TransaksiDetailItem, TransaksiItem } from "../models/Transaksi";
 import User from '../models/User'
 
 
@@ -11,10 +12,30 @@ export default function TransaksiService() {
             body: JSON.stringify(transaksiData)
         }).then((res: Response) => {
             return res.json()
-        }, err => {
-            Swal.fire({ title: 'Gagal Login', text: 'Gagal melakukan login : ' + err, icon: 'error' })
         })
     }
 
-    return { addTransaksi }
+    const getTransaksi = async () => {
+        return fetch(`${EXT_API}/transaksi`)
+            .then((res: Response) => {
+                if (res.status == 200) {
+                    return res.json() as Promise<TransaksiItem[]>;
+                } else {
+                    return Promise.reject(res.statusText)
+                }
+            });
+    }
+
+    const findTransaksi = async (id) => {
+        return fetch(`${EXT_API}/transaksi/${id}`)
+            .then((res: Response) => {
+                if (res.status == 200) {
+                    return res.json() as Promise<TransaksiDetailItem>;
+                } else {
+                    return Promise.reject(res.statusText)
+                }
+            });
+    }
+
+    return { addTransaksi, getTransaksi, findTransaksi }
 }

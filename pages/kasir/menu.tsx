@@ -3,30 +3,27 @@ import { Button, Col, Row, Typography } from 'antd'
 import MenuMakanan from '../../utils/models/menu'
 import { MenuService } from '../../utils/services/MenuService'
 import MenuList from '../../components/menu/MenuList'
-import KeranjangList from '../../components/menu/KeranjangList'
+import KeranjangList from '../../components/keranjang/KeranjangList'
 import Keranjang from '../../utils/models/keranjang'
 import Container from '../../components/wrapper/Container'
 import { connect } from 'react-redux'
 import { addToCart } from '../../utils/reduxes/cart/CartActions'
 import { AppState } from '../../utils/reduxes/store'
 import router from 'next/router'
+import Swal from 'sweetalert2'
 
 export function MenuKasir({ addToCart }) {
 
     const [menuData, setMenuData] = useState(Array<MenuMakanan>())
     const { getMenu } = MenuService()
-    const getMenuCallback = useCallback(
-        () => {
-            return getMenu()
-        },
-        [],
-    )
 
     useEffect(() => {
-        getMenuCallback().then((data) => {
+        getMenu().then((data) => {
             setMenuData(data)
+        }).catch(err => {
+            Swal.fire('Gagal Mengambil menu', 'Gagal mengambil menu : ' + err, 'error')
         })
-    }, [getMenuCallback])
+    }, [])
 
     return (
 

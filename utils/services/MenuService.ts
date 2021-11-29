@@ -1,12 +1,19 @@
 import { useCallback } from "react";
 import { EXT_API } from "../constant";
 import MenuMakanan from "../models/menu";
+import { AuthState } from "../reduxes/auth/AuthReducer";
 
 export const MenuService = () => {
+
   const getMenu = async () => {
-    return fetch(`${EXT_API}/menu`).then((res: Response) => {
-      return res.json() as Promise<MenuMakanan[]>;
-    });
+    return fetch(`${EXT_API}/menu`)
+      .then((res: Response) => {
+        if (res.status == 200) {
+          return res.json() as Promise<MenuMakanan[]>;
+        } else {
+          return Promise.reject(res.statusText)
+        }
+      });
   }
 
   const addMenu = async (values) => {

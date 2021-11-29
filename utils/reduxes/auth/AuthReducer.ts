@@ -1,7 +1,7 @@
 import User from "../../models/User";
 import { RESTORE_AUTH_STATE, AUTHENTICATE, DEAUTHENTICATE } from "../ActionConstants";
 
-type AuthState = {
+export type AuthState = {
     isLoggedIn: boolean,
     user: User
 }
@@ -14,17 +14,7 @@ if (typeof localStorage !== "undefined") {
     const localAuth = JSON.parse(localStorage.getItem('auth') || "{}")
     if (localAuth) {
         initialState = localAuth
-    } else {
-        initialState = {
-            isLoggedIn: false,
-            user: null
-        }
     }
-} else {
-    initialState = {
-        isLoggedIn: false,
-        user: null
-    };
 }
 
 

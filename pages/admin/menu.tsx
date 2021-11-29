@@ -12,13 +12,11 @@ export function Menu() {
 
   const router = useRouter();
 
-  const onRowClick = (record, rowIndex) => {
-    return {
-      onClick: (event) => {
-        router.push(`/admin/menu/${record.id}`);
-      },
-    };
-  };
+  const onRowClick = (record, rowIndex) => ({
+    onClick: (event) => {
+      router.push(`/admin/menu/${record.id}`);
+    },
+  });
 
   const onClickTambah = () => {
     router.push('/admin/menu/tambah')

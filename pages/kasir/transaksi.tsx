@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd'
 import React from 'react'
-import KeranjangList from '../../components/menu/KeranjangList'
+import KeranjangList from '../../components/keranjang/KeranjangList'
 import Pembayaran from '../../components/transaksi/Pembayaran'
 
 export default function KasirTransaksi() {
