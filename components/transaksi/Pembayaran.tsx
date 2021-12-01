@@ -19,7 +19,7 @@ type AddTransaksi = {
     menu: MenuTransaksi[]
 }
 
-function Pembayaran({ keranjang, user, clearCart }: { keranjang: KeranjangState }) {
+function Pembayaran({ keranjang, user, clearCart }) {
     const [bayar, setBayar] = useState(0)
     const [kembalian, setKembalian] = useState(0)
 

@@ -7,7 +7,7 @@ import { DeleteOutlined } from '@ant-design/icons'
 import { setCart, deleteCart } from '../../utils/reduxes/cart/CartActions'
 import Container from '../wrapper/Container'
 
-function KeranjangItem({ keranjang, setCart, deleteCart }: { keranjang: Keranjang }) {
+function KeranjangItem({ keranjang, setCart, deleteCart }) {
 
     const onKeranjangJumlahChange = (value: number) => {
         if (value < 1) {

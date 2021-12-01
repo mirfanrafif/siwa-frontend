@@ -8,7 +8,7 @@ import { AppState } from "../../utils/reduxes/store";
 import router from "next/router";
 import { AuthState } from "../../utils/reduxes/auth/AuthReducer";
 
-const LayoutWrapper = ({ auth, children, logout }: { auth: AuthState }) => {
+const LayoutWrapper = ({ auth, children, logout }) => {
 
   const [visible, setVisible] = useState(false)
 
